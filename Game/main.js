@@ -3,6 +3,9 @@
 
 const readLineSync = require('readline-sync');
 
+//Импортируем игровые модули
+const runGuessTheNumber = require('./guess-the-number/game');
+
 //контроллер игрового цикла
 //Game loop controller
 let keepPlaying = true;
@@ -20,4 +23,25 @@ while (keepPlaying) {
     const games = [
         'Guess the Number'
     ];
+    //отображаем доступные игры
+    const index = readLineSync.keyInSelect(games, 'Choose a game or exit');
+
+    //в зависимости от выбора игрока запускаем соответсвующую игру
+    switch (index) {
+        case 0:
+            runGuessTheNumber();
+            break;
+        //дальше будет добавляться новые игры
+        default:
+            console.log("Exiting the game. Goodbye!");
+            keepPlaying = false;
+            break;
+    }
+    //После завершения игры спрашиваем, хочет ли игрок сыграть снова
+    if (keepPlaying) {
+        if (!readLineSync.keyInYN('Do you want to another game?')){
+            keepPlaying = false;
+            console.log("Goodbye!");
+        }
+    }
 }
